@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:instagram_clone_flutter/src/component/iamge_data.dart';
 import 'package:instagram_clone_flutter/src/controller/bottom_nav_controller.dart';
+import 'package:instagram_clone_flutter/src/pages/home.dart';
+
 
 class App extends GetView<BottomNavController> {
   const App({Key? key}) : super(key: key);
@@ -12,11 +14,11 @@ class App extends GetView<BottomNavController> {
     return WillPopScope(
         child: Obx(
           () => Scaffold(
-            appBar: AppBar(),
             // 탭 변경 시 container도 변경
             body: IndexedStack(
               index: controller.pageIndex.value,
               children: [
+                const Home(),
                 Container(child: Center(child: Text('Home'))),
                 Container(child: Center(child: Text('Search'))),
                 Container(child: Center(child: Text('Upload'))),
@@ -24,6 +26,7 @@ class App extends GetView<BottomNavController> {
                 Container(child: Center(child: Text('Mypage'))),
               ],
             ),
+            // 아래 Tab Bar
             bottomNavigationBar: BottomNavigationBar(
               showSelectedLabels: false,
               showUnselectedLabels: false,
@@ -60,7 +63,7 @@ class App extends GetView<BottomNavController> {
                       icon: IconsPath.activeOff,
                     ),
                     activeIcon: ImageData(
-                      icon: IconsPath.activeON,
+                      icon: IconsPath.activeOn,
                     ),
                     label: 'home'),
                 BottomNavigationBarItem(
