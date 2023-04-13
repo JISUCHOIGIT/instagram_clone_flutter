@@ -14,6 +14,7 @@ class PostWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           AvatarWidget(
+            //타입
             type: AvatarType.TYPE3,
             nickname: 'JISUCHOIGIT',
             size: 40,
