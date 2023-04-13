@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-// 다양한 아바타 스타일을 => enum타입으로 지정 //테스트
+// 다양한 아바타 스타일을 => enum타입으로 지정 //테스트 s
 enum AvatarType { TYPE1, TYPE2, TYPE3 }
 
 class AvatarWidget extends StatelessWidget {
