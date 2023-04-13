@@ -76,20 +76,31 @@ class AvatarWidget extends StatelessWidget {
     );
   }
 
+  Widget type3Widget() {
+    return Row(
+      children: [
+        type1Widget(),
+        Text(nickname ?? '',
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),)
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     // type에 따라 다른 Avatar Widget return
     // type1, type2, type3 switch 문
     switch (type) {
-      // 스토리 있는 다른 사용자들 type
+    // 스토리 있는 다른 사용자들 type
       case AvatarType.TYPE1:
         return type1Widget();
         break;
-      // 자기 스토리 위젯
+    // 자기 스토리 위젯
       case AvatarType.TYPE2:
         return type2Widget();
         break;
       case AvatarType.TYPE3:
+        return type3Widget();
     }
     return const Placeholder();
   }

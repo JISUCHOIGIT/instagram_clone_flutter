@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:instagram_clone_flutter/src/component/iamge_data.dart';
+import 'package:instagram_clone_flutter/src/component/post_widget.dart';
 
 import '../component/avatar_widget.dart';
 
@@ -70,7 +71,10 @@ class Home extends StatelessWidget {
   }
 
   Widget _postList(){
-    return Container();
+    return Column(
+      children:
+        List.generate(50, (index) => PostWidget()).toList(),
+    );
   }
 
 
