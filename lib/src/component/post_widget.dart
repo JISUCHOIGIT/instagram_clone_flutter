@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:instagram_clone_flutter/src/component/avatar_widget.dart';
 import 'package:instagram_clone_flutter/src/component/iamge_data.dart';
@@ -13,6 +14,7 @@ class PostWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           AvatarWidget(
+            //타입
             type: AvatarType.TYPE3,
             nickname: 'JISUCHOIGIT',
             size: 40,
@@ -78,9 +80,62 @@ class PostWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text('좋아요 150개', style: TextStyle(fontWeight: FontWeight.bold),),
-          Text('콘텐츠 1입니다.',),
+          Text(
+            '좋아요 150개',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          //flutter pub add expandable_text
+
+          ExpandableText(
+            '콘텐츠1입니다\n콘텐츠1입니다\n콘텐츠1입니다\n콘텐츠1입니다\n콘텐츠1입니다\n',
+            prefixText: 'JISUCHOIGIT',
+            onPrefixTap: () {
+              print('페이지이동');
+            },
+            prefixStyle: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+            // 펼치기 제목
+            expandText: '더보기',
+            // 접기 제목
+            collapseText: '접기',
+            maxLines: 3,
+            // 텍스트 클릭 시 펼치기
+            expandOnTextTap: true,
+            // 텍스트 클릭 시 접기
+            collapseOnTextTap: true,
+            linkColor: Colors.grey,
+          ),
         ],
+      ),
+    );
+  }
+
+  Widget _replyTextBtn() {
+    return GestureDetector(
+      onTap: () {},
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 15.0),
+        child: Text(
+          '댓글 109개 모두 보기',
+          style: TextStyle(
+            color: Colors.grey,
+            fontSize: 13,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _dateAgo() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+      child: Text(
+        '1일전',
+        style: TextStyle(
+          color: Colors.grey,
+          fontSize: 11,
+        ),
       ),
     );
   }
@@ -90,6 +145,7 @@ class PostWidget extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(top: 20),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         // 포스트 하나에 구성된 위젯
         children: [
           _header(),
@@ -99,8 +155,10 @@ class PostWidget extends StatelessWidget {
           _infoCount(),
           SizedBox(height: 5),
           _infoDescription(),
-          // _replyTextBtn(),
-          // _dateAgo(),
+          SizedBox(height: 5),
+          _replyTextBtn(),
+          SizedBox(height: 5),
+          _dateAgo(),
         ],
       ),
     );
