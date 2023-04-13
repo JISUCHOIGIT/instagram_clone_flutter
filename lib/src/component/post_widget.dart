@@ -84,6 +84,7 @@ class PostWidget extends StatelessWidget {
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
           //flutter pub add expandable_text
+
           ExpandableText(
             '콘텐츠1입니다\n콘텐츠1입니다\n콘텐츠1입니다\n콘텐츠1입니다\n콘텐츠1입니다\n',
             prefixText: 'JISUCHOIGIT',
