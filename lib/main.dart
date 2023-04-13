@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
           // appBar 배경색
           backgroundColor: Colors.white,
           // appBar 텍스트 색상
-          titleTextStyle:TextStyle(color: Colors.black),
+          titleTextStyle:TextStyle(color: Colors.red),
         ),
       ),
       initialBinding: InitBinding(),
