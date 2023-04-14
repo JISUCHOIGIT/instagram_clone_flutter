@@ -9,7 +9,12 @@ import '../pages/upload.dart';
 enum PageName { HOME, SEARCH, UPLOAD, ACTIVITY, MYPAGE }
 
 class BottomNavController extends GetxController {
+
+  static BottomNavController get to => Get.find();
+
   RxInt pageIndex = 0.obs;
+  // key 관리
+  GlobalKey<NavigatorState> searchPageNavigationKey = GlobalKey<NavigatorState>();
   List<int> bottomHistory = [0];
 
   void changeBottomNav(int value, {bool hasGesture = true}) {
@@ -62,6 +67,15 @@ class BottomNavController extends GetxController {
       );
       return true;
     } else {
+
+      var page = PageName.values[bottomHistory.last];
+      if(page == PageName.SEARCH) {
+        // search -> 검색 -> pop할게 있으면 -> 검색 이미지 -> 홈
+        var value = await searchPageNavigationKey.currentState!.maybePop();
+        if(value) return false;
+      }
+
+
       print('goto before page!');
       bottomHistory.removeLast();
       var index = bottomHistory.last;
