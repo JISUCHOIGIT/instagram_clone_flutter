@@ -75,7 +75,6 @@ class BottomNavController extends GetxController {
         if(value) return false;
       }
 
-
       print('goto before page!');
       bottomHistory.removeLast();
       var index = bottomHistory.last;

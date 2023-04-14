@@ -4,6 +4,7 @@ import 'package:instagram_clone_flutter/src/component/iamge_data.dart';
 import 'package:instagram_clone_flutter/src/controller/bottom_nav_controller.dart';
 import 'package:instagram_clone_flutter/src/pages/home.dart';
 import 'package:instagram_clone_flutter/src/pages/search.dart';
+import 'package:instagram_clone_flutter/src/pages/upload.dart';
 
 class App extends GetView<BottomNavController> {
   const App({Key? key}) : super(key: key);
@@ -31,9 +32,7 @@ class App extends GetView<BottomNavController> {
                 },
               ),
               const Search(),
-              Container(child: Center(child: Text('Home'))),
-              Container(child: Center(child: Text('Search'))),
-              Container(child: Center(child: Text('Upload'))),
+              const Upload(),
               Container(child: Center(child: Text('Activity'))),
               Container(child: Center(child: Text('Mypage'))),
             ],
