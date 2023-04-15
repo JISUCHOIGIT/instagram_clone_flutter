@@ -1,6 +1,8 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:instagram_clone_flutter/src/component/iamge_data.dart';
+import 'package:photo_manager/photo_manager.dart';
 
 class Upload extends StatefulWidget {
   const Upload({Key? key}) : super(key: key);
@@ -10,13 +12,85 @@ class Upload extends StatefulWidget {
 }
 
 class _UploadState extends State<Upload> {
+  // _loadPhotos albums 아래와 같이 넘어옴
+  var albums = <AssetPathEntity>[];
+  var imageList = <AssetEntity>[];
+  var headerTitle = '';
+  AssetEntity? selectedImage;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _loadPhotos();
+  }
+
+  // 카메라 앨범 내 이미지 가져오기
+  void _loadPhotos() async {
+    var result = await PhotoManager.requestPermissionExtend();
+    // 권한이 있을경우
+    if (result.isAuth) {
+      albums = await PhotoManager.getAssetPathList(
+        type: RequestType.image,
+        filterOption: FilterOptionGroup(
+          imageOption: FilterOption(
+            sizeConstraint: SizeConstraint(minWidth: 100, minHeight: 100),
+          ),
+          orders: [
+            OrderOption(
+              type: OrderOptionType.createDate,
+              asc: false,
+            ),
+          ],
+        ),
+      );
+      // 사진 호출
+      _loadData();
+    } else {
+      // message 권한 요청
+    }
+  }
+
+  // 업로드 시 setState
+  void update() => setState(() {});
+
+  void _loadData() async {
+    headerTitle = albums.first.name;
+    await _pagingPhotos();
+    update();
+  }
+
+  // 이미지 사이즈 지정
+  Future<void> _pagingPhotos() async {
+    var photos = await albums.first.getAssetListPaged(page: 0, size: 30);
+    imageList.addAll(photos);
+    selectedImage = imageList.first;
+  }
+
   Widget _imagePreview() {
+    var width = MediaQuery.of(context).size.width;
     return Container(
       // 정사각형으로 영역
       // Get.width / height
-      width: Get.width,
-      height: Get.width,
-      color: Colors.grey,
+      width: width,
+      height: width,
+      child: selectedImage == null
+          ? Container()
+          : FutureBuilder(
+              future: selectedImage!.thumbnailDataWithSize(
+                ThumbnailSize(width.toInt(), width.toInt()),
+              ),
+              builder: (context, AsyncSnapshot<Uint8List?> snapshot) {
+                if (snapshot.hasData) {
+                  return Image.memory(
+                    snapshot.data!,
+                    fit: BoxFit.cover,
+                  );
+                } else {
+                  return Container();
+                }
+              },
+            ),
     );
   }
 
@@ -32,7 +106,7 @@ class _UploadState extends State<Upload> {
               children: [
                 // 갤러리 선택시 photomanager로 직접 디바이스 내의 선택사항 가져올것
                 Text(
-                  '갤러리',
+                  headerTitle,
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 18,
@@ -87,22 +161,39 @@ class _UploadState extends State<Upload> {
     // SliverGridDelegateWithFixedCrossAxisCount :
     // singlechildscrollview & girdview 같이 사용할 경우 physics: NeverScrollableScrollPhysics(), 명시해서 방지하기
     return GridView.builder(
-      // 스크롤 방식 금지
-      physics: NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          // childAspectRatio : 숫자 비율에 따라 사각형 모양으로
-          crossAxisCount: 4,
-          // 간격조절
-          mainAxisSpacing: 1,
-          // 간격조절
-          crossAxisSpacing: 1,
-          // 간격조절
-          childAspectRatio: 1),
-      itemBuilder: (context, index) => Container(
-        color: Colors.red,
+        // 스크롤 방식 금지
+        physics: NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            // childAspectRatio : 숫자 비율에 따라 사각형 모양으로
+            crossAxisCount: 4,
+            // 간격조절
+            mainAxisSpacing: 1,
+            // 간격조절
+            crossAxisSpacing: 1,
+            // 간격조절
+            childAspectRatio: 1),
+        itemCount: imageList.length,
+        itemBuilder: (context, index) {
+          return _photoWidget(imageList[index]);
+        });
+  }
+
+  Widget _photoWidget(AssetEntity asset) {
+    return FutureBuilder(
+      future: asset.thumbnailDataWithSize(
+        ThumbnailSize(200, 200),
       ),
-      itemCount: 100,
+      builder: (context, AsyncSnapshot<Uint8List?> snapshot) {
+        if (snapshot.hasData) {
+          return Image.memory(
+            snapshot.data!,
+            fit: BoxFit.cover,
+          );
+        } else {
+          return Container();
+        }
+      },
     );
   }
 
