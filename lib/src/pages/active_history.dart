@@ -50,14 +50,14 @@ class ActiveHistory extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          const SizedBox(
+            height: 10,
+          ),
           Text(
             title,
             style: const TextStyle(
               fontSize: 16,
             ),
-          ),
-          const SizedBox(
-            height: 15,
           ),
           _activeItemOne(),
           _activeItemOne(),
