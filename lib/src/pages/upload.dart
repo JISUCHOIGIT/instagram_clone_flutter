@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:instagram_clone_flutter/src/component/iamge_data.dart';
 import 'package:photo_manager/photo_manager.dart';
 
@@ -111,10 +112,14 @@ class _UploadState extends State<Upload> {
                 // isScrollControlled: true, bottomModal 사이즈를 전체로 띄우기
                 isScrollControlled: albums.length > 10 ? true : false,
                 // 전체 사이즈 - 상단 액션바
-                constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height - MediaQuery.of(context).padding.top),
+                constraints: BoxConstraints(
+                    maxHeight: MediaQuery.of(context).size.height -
+                        MediaQuery.of(context).padding.top),
                 builder: (context) => Container(
                   // modal size 지정
-                  height: albums.length > 10 ? Size.infinite.height : albums.length * 60,
+                  height: albums.length > 10
+                      ? Size.infinite.height
+                      : albums.length * 60,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -266,7 +271,7 @@ class _UploadState extends State<Upload> {
         backgroundColor: Colors.white,
         elevation: 0,
         leading: GestureDetector(
-          onTap: () {},
+          onTap: Get.back,
           child: Padding(
             padding: const EdgeInsets.all(15),
             child: ImageData(

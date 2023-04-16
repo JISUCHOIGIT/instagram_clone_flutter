@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:instagram_clone_flutter/src/component/iamge_data.dart';
 import 'package:instagram_clone_flutter/src/controller/bottom_nav_controller.dart';
+import 'package:instagram_clone_flutter/src/pages/active_history.dart';
 import 'package:instagram_clone_flutter/src/pages/home.dart';
 import 'package:instagram_clone_flutter/src/pages/search.dart';
 import 'package:instagram_clone_flutter/src/pages/upload.dart';
@@ -32,7 +33,10 @@ class App extends GetView<BottomNavController> {
                 },
               ),
               const Search(),
-              const Upload(),
+              // 페이지라우트가 아닌 팝업으로 뜨우기 때문에
+              // 빈컨테이너로 위치를 맞추기
+              //Container(),
+              const ActiveHistory(),
               Container(child: Center(child: Text('Activity'))),
               Container(child: Center(child: Text('Mypage'))),
             ],
